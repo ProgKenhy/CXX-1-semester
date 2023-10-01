@@ -3,13 +3,13 @@ using namespace std;
 
 int main()
 {
-	const int dlina = 1000; // Выбираем длину массива
+	const int dlina = 1000; // lenght of massive
 	int array[dlina];
 	int i;
 	short elem;
 	int suma = 0;
-	int minimum = 1000;
-	for (i = 0; i < dlina; i++) // Блок генерации массива (в данном написании кода можно менять способы генерации массива)
+	int minimum = 100000;
+	for (i = 0; i < dlina; i++) // massive generation
 	{
 		array[i] = i + 1;
 	}
