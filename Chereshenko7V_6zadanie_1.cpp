@@ -3,13 +3,13 @@ using namespace std;
 
 int main()
 {
-	setlocale(LC_ALL, "Rus");
-	int array[150];
+	const int dlina = 1000; // Выбираем длину массива
+	int array[dlina];
 	int i;
-	int dlina = 20; // Г‚Г»ГЎГЁГ°Г ГҐГ¬ Г¤Г«ГЁГ­Гі Г¬Г Г±Г±ГЁГўГ 
+	short elem;
 	int suma = 0;
 	int minimum = 1000;
-	for (i = 0; i < dlina; i++) // ГЃГ«Г®ГЄ ГЈГҐГ­ГҐГ°Г Г¶ГЁГЁ Г¬Г Г±Г±ГЁГўГ  (Гў Г¤Г Г­Г­Г®Г¬ Г­Г ГЇГЁГ±Г Г­ГЁГЁ ГЄГ®Г¤Г  Г¬Г®Г¦Г­Г® Г¬ГҐГ­ГїГІГј Г±ГЇГ®Г±Г®ГЎГ» ГЈГҐГ­ГҐГ°Г Г¶ГЁГЁ Г¬Г Г±Г±ГЁГўГ )
+	for (i = 0; i < dlina; i++) // Блок генерации массива (в данном написании кода можно менять способы генерации массива)
 	{
 		array[i] = i + 1;
 	}
@@ -22,10 +22,11 @@ int main()
 			if (minimum > array[i])
 			{
 				minimum = array[i];
+				elem = i;
 			}
 		}
 	}
-	cout << "Г‘ГіГ¬Г¬Г  ГІГ ГЄГЁГµ Г·ГЁГ±ГҐГ« Г°Г ГўГ­Г : " << suma << endl;
-	cout << "ГЊГЁГ­ГЁГ¬Г Г«ГјГ­Г®ГҐ ГЁГ§ ГІГ ГЄГЁГµ Г·ГЁГ±ГҐГ« Г°Г ГўГ­Г®: " << minimum;
+	cout << "Summa = " << suma << endl;
+	cout << "Minimum array[" << elem << "] = " << minimum;
 	return 0;
 }
