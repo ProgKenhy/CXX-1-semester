@@ -20,8 +20,9 @@ int maxdigit(int f)
 		{
 			digit = f % 10;
 		}
-		return digit;
+		f/=10;
 	}
+	return digit;
 }
 
 int main()
@@ -50,7 +51,7 @@ int main()
 					array[j] = array[i];
 					array[i] = tmp;
 				}
-				else if (array[i] > array[j])
+				else if (((array[i] > array[j]) && (maxdigit(array[i]) == maxdigit(array[j]))))
 				{
 					tmp = array[j];
 					array[j] = array[i];
