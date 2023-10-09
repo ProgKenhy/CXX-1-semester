@@ -1,7 +1,6 @@
-#include <iostream> //Дано натуральное число N (N<10^9). Найти произведение четных цифр числа N.
+#include <iostream>
 int main()
 {
-	setlocale(LC_ALL, "Rus");
 	unsigned int N;
 	bool flag = false;
 	unsigned long long proiz = 1;
