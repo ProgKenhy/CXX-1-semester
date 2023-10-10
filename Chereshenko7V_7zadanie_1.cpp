@@ -4,10 +4,11 @@ using namespace std;
 int main()
 {
 	int array[10000], n, tmp;
-	short digit;
+	short digit, count, n1 = 0;
 	bool flag;
+	cout << "Input number of elements: ";
 	cin >> n;
-	flag = true;
+	cout << "Input elements of massive: ";
 	for (int i = 0; i < n; i++)
 	{
 		cin >> array[i];
@@ -16,44 +17,43 @@ int main()
 		{
 			digit = tmp % 10;
 			tmp /= 10;
+			count = 0;
 			while (tmp)
 			{
-				if (tmp % 10 == digit)
+				if (tmp % 10 != digit)
 				{
-					flag = false;
-					break;
+					count++;
 				}
 				tmp /= 10;
 			}
-			if (flag == false)
-			{
-				break;
-			}
 		}
-		if (flag == false)
+		if (count != 0)
 		{
-		cout << "False number" << endl;
-		break;
+			n1++;
 		}
 	}
-	if (flag)
+	if (n == n1)
 	{
-		for (int i = 0; i < n-1; i++)
+		for (int i = 0; i < n - 1; i++)
 		{
-			for (int j = i+1; j < n; j++)
+			for (int j = i + 1; j < n; j++)
 			{
-				if (array [i] < array [j])
+				if (array[i] < array[j])
 				{
-					tmp=array[i];
-					array[i]=array[j];
-					array[j]=tmp;
+					tmp = array[i];
+					array[i] = array[j];
+					array[j] = tmp;
 				}
 			}
 		}
 		for (int i = 0; i < n; i++)
 		{
-			cout<<array[i]<< " ";
+			cout << array[i] << " ";
 		}
+	}
+	else
+	{
+		cout << "Error";
 	}
 	return 0;
 }
