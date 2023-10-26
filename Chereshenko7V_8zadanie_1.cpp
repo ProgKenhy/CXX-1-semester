@@ -20,12 +20,32 @@ int wordlength(char *x)
 	}
 	return len;
 }
+
+bool issoglasnyedifferent(char *x, char *y)
+{
+	for (int i = 0; i < wordlength(x); i++)
+	{
+		int count = 0;
+		for (int j = 0; j < wordlength(y); j++)
+		{
+			if (x[i] == y[j])
+			{
+				count++;
+				if (count > 1)
+					return false;
+			}
+		}
+	}
+	return true;
+}
+
 int main()
 {
 	setlocale(LC_ALL, "Russian");
 	const int n = 2001;
 	char word[100] = {0};
 	char result[n][100] = {0};
+	char soglasnye[43] = "בגדהזחיךכלםןנסעפץצקרש"; 
 	std::ifstream infile;
 	infile.open("C:\\Users\\Alexander\\.vscode\\Projects\\Files\\input.txt");
 	if (!infile.is_open())
@@ -52,35 +72,39 @@ int main()
 		if ((wordlength(word)) > wordlength(result[inminlen]))
 		{
 			int maxlen = 0;
-			bool flag = false;
-			for (int q = 0; q < k; q++)
+			bool flag;
+			if (issoglasnyedifferent(soglasnye, word))
 			{
-				flag = false;
-				for (int w = 0; w < 100; w++)
+				for (int q = 0; q < k; q++)
 				{
+					flag = false;
+					int countofequvalent = 0;
 					if (wordlength(result[q]) < wordlength(word))
 						maxlen = wordlength(word);
 					else
 						maxlen = wordlength(result[q]);
-					if ((word[w] != result[q][w]) && (w < maxlen))
+					for (int w = 0; w < maxlen; w++)
 					{
-						flag = true;
+						if (word[w] != result[q][w])
+						{
+							flag = true;
+						}
 					}
+					if (!flag)
+						break;
 				}
-				if (!flag)
-					break;
-			}
-			if (flag)
-			{
-				for (int b = 0; b < wordlength(word); b++)
+				if (flag)
 				{
-					result[inminlen][b] = word[b];
-				}
-				for (int c = 0; c < k; c++)
-					if (wordlength(result[inminlen]) > wordlength(result[c]))
+					for (int b = 0; b < wordlength(word); b++)
 					{
-						inminlen = c;
+						result[inminlen][b] = word[b];
 					}
+					for (int c = 0; c < k; c++)
+						if (wordlength(result[inminlen]) > wordlength(result[c]))
+						{
+							inminlen = c;
+						}
+				}
 			}
 		}
 	}
