@@ -1,13 +1,13 @@
-// Г„Г Г­ ГґГ Г©Г«, Г±Г®Г¤ГҐГ°Г¦Г Г№ГЁГ© Г°ГіГ±Г±ГЄГЁГ© ГІГҐГЄГ±ГІ.
-//  ГЌГ Г©ГІГЁ Гў ГІГҐГЄГ±ГІГҐ N<=2000 Г±Г Г¬Г»Гµ Г¤Г«ГЁГ­Г­Г»Гµ Г±Г«Г®Гў, Г­ГҐ Г±Г®Г¤ГҐГ°Г¦Г Г№ГЁГµ Г®Г¤ГЁГ­Г ГЄГ®ГўГ»Гµ Г±Г®ГЈГ«Г Г±Г­Г»Гµ.
-//  Г‡Г ГЇГЁГ±Г ГІГј Г­Г Г©Г¤ГҐГ­Г­Г»ГҐ Г±Г«Г®ГўГ  Гў ГІГҐГЄГ±ГІГ®ГўГ»Г© ГґГ Г©Г« Гў ГЇГ®Г°ГїГ¤ГЄГҐ Г­ГҐГўГ®Г§Г°Г Г±ГІГ Г­ГЁГї Г¤Г«ГЁГ­Г».
-//  Г‚Г±ГҐ Г­Г Г©Г¤ГҐГ­Г­Г»ГҐ Г±Г«Г®ГўГ  Г¤Г®Г«Г¦Г­Г» ГЎГ»ГІГј Г°Г Г§Г­Г»Г¬ГЁ!
+// Дан файл, содержащий русский текст.
+//  Найти в тексте N<=2000 самых длинных слов, не содержащих одинаковых согласных.
+//  Записать найденные слова в текстовый файл в порядке невозрастания длины.
+//  Все найденные слова должны быть разными!
 #include <iostream>
 #include <fstream>
 
-char tolower(char x)
+char tolowermy(char x)
 {
-	if ('ГЂ' <= x && x <= 'Гџ')
+	if ('А' <= x && x <= 'Я')
 		return x += 32;
 	return x;
 }
@@ -21,7 +21,7 @@ int wordlength(char *x)
 	return len;
 }
 
-bool issoglasnyedifferent(char *x, char *y)
+bool is_rus_and_soglasnye_different(char *x, char *y)
 {
 	for (int i = 0; i < wordlength(x); i++)
 	{
@@ -34,6 +34,8 @@ bool issoglasnyedifferent(char *x, char *y)
 				if (count > 1)
 					return false;
 			}
+			if (y[j] >= 'A' && y[j] <= 'z')
+				return false;
 		}
 	}
 	return true;
@@ -43,9 +45,10 @@ int main()
 {
 	setlocale(LC_ALL, "Russian");
 	const int n = 2001;
+	int vsego = 0;
 	char word[100] = {0};
 	char result[n][100] = {0};
-	char soglasnye[43] = "ГЎГўГЈГ¤Г¦Г§Г©ГЄГ«Г¬Г­ГЇГ°Г±ГІГґГµГ¶Г·ГёГ№"; 
+	char soglasnye[43] = "бвгджзйклмнпрстфхцчшщ";
 	std::ifstream infile;
 	infile.open("C:\\Users\\Alexander\\.vscode\\Projects\\Files\\input.txt");
 	if (!infile.is_open())
@@ -60,20 +63,23 @@ int main()
 	while (!infile.eof())
 	{
 		infile >> word;
-		word[0] = tolower(word[0]);
+		word[0] = tolowermy(word[0]);
 		lastpos = wordlength(word) - 1;
 		for (int i = lastpos; i >= 0; i--)
 		{
-			if (ispunct(word[i]) || (isdigit(word[i])))
+			if (ispunct(word[i]) || isdigit(word[i]))
 				word[i] = '\0';
+			else if (ispunct(word[0]) || isdigit(word[0]))
+				word[0] = '\0';
 			else
 				break;
 		}
+
 		if ((wordlength(word)) > wordlength(result[inminlen]))
 		{
 			int maxlen = 0;
 			bool flag;
-			if (issoglasnyedifferent(soglasnye, word))
+			if (is_rus_and_soglasnye_different(soglasnye, word))
 			{
 				for (int q = 0; q < k; q++)
 				{
@@ -99,6 +105,7 @@ int main()
 					{
 						result[inminlen][b] = word[b];
 					}
+					vsego++;
 					for (int c = 0; c < k; c++)
 						if (wordlength(result[inminlen]) > wordlength(result[c]))
 						{
@@ -124,6 +131,11 @@ int main()
 		}
 	std::ofstream outfile;
 	outfile.open("C:\\Users\\Alexander\\.vscode\\Projects\\Files\\output.txt");
+	if (vsego < k)
+	{
+		k = vsego;
+		std::cout << "Number of needs words is smaller!" << std::endl;
+	}
 	for (int i = 0; i < k; i++)
 	{
 		std::cout << "TOP " << i + 1 << ": " << result[i] << std::endl;
